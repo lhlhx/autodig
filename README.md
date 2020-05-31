@@ -1,7 +1,7 @@
 # autodig
 Batch obtaining and verifying DNS record
 
-autodig is currently in *alpha* development usage, it requires cleanup and [Feature Enhancement](##Features Required)!
+autodig is currently in *alpha* development stage, it requires cleanup and [Feature Enhancement](#features-required)!
 
 ## Requirements
 - You have a Linux System.
@@ -34,6 +34,6 @@ Use the questions-and-answer pair to check whether new DNS server records are in
 ```
 
 ## Features Required
-*    FQDN checking
->    IPv6 and IPv6 checking
->    Any Suggestions?
+- FQDN checking
+- IPv6 and IPv6 checking
+- Any Suggestions?
