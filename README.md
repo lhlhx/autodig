@@ -15,12 +15,12 @@ sudo apt-get install -y dnsutils
 ## Usage
 Usage Example:
 
-Create a query text file, namely query.txt, with format: <RType>,<FQDN> 
+Create a query text file, namely query.txt, with format: _RType,FQDN_
 ```bash
-A,google.com
-NS,google.com
-A,yahoo.com
-NS,yahoo.com
+A,google.com.
+NS,google.com.
+A,yahoo.com.
+NS,yahoo.com.
 ```
 
 Commit batch dns record lookup with autodig.sh, questions-and-answer pair will be created in *answers.txt*.
