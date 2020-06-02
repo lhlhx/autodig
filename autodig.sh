@@ -337,7 +337,7 @@ function func_verify_record_srv() {
 
     # Get Array
     if ! func_get_values_from_pre_array "$pre_array"; then
-        func_log_print 0 "${FUNSRV[0]}: func_get_values_from_pre_array failed, skip current line."
+        func_log_print 0 "${FUNCNAME[0]}: func_get_values_from_pre_array failed, skip current line."
         return $answer_code
     fi
 
@@ -354,6 +354,33 @@ function func_verify_record_srv() {
 
     #answer_code=$(func_verify_record "SRV")
     func_verify_record "SRV"
+    #return $answer_code
+}
+## Verify SOA Record
+function func_verify_record_soa() {
+    local hostname=$1
+    local pre_array=$2
+    local answer_code=1
+
+    # Get Array
+    if ! func_get_values_from_pre_array "$pre_array"; then
+        func_log_print 0 "${FUNCNAME[0]}: func_get_values_from_pre_array failed, skip current line."
+        return $answer_code
+    fi
+
+    # Sort Array
+    if ! func_set_array_sorted; then
+        func_log_print 0 "${FUNCNAME[0]}: func_set_array_sorted failed, skip current line."
+        return $answer_code
+    fi
+    
+    # Check if there are zero or more than one SOA records, if YES, only process first SOA record.
+    if [[  ${#__array_list[@]} -eq 0 ]]; then
+        func_log_print 0 "${FUNCNAME[0]}: SOA have zero records, skip current line."
+    fi
+
+    #answer_code=$(func_verify_record "SOA")
+    func_verify_record "SOA"
     #return $answer_code
 }
 
@@ -490,6 +517,21 @@ function service_record_route() {
                     hostname=${line[1]}
                     answer=${line[2]}
                     func_verify_record_srv "$hostname" "$answer"
+                else
+                    hostname=${line[1]}
+                    allowed_record=1
+                fi
+                ;;
+            SOA)
+                # SOA: Verify SOA Record
+                # Note: RFC 1935 Exactly one SOA RR should be present at the top of the zone.
+                # Schema: SOA,<FQDN>,<SOA Record 1>;<SOA Record 2>;...;<SOA Record n>
+
+                func_log_print 2 "Enter SOA case."
+                if [[ $__service_option -eq 0 ]]; then
+                    hostname=${line[1]}
+                    answer=${line[2]}
+                    func_verify_record_soa "$hostname" "$answer"
                 else
                     hostname=${line[1]}
                     allowed_record=1

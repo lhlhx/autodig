@@ -17,20 +17,23 @@ Usage Example:
 
 Create a query text file, namely query.txt, with format: _RType,FQDN_
 ```bash
-A,google.com.
-NS,google.com.
 A,yahoo.com.
-NS,yahoo.com.
+CNAME,microsoft.github.com.
+MX,google.com.
+NS,google.com.
+SOA,google.com.
+SRV,_sip._udp.sip.voice.google.com.
+TXT,google.com.
 ```
 
 Commit batch dns record lookup with autodig.sh, questions-and-answer pair will be created in *answers.txt*.
 ```bash
-./autodig.sh 0 query.txt answers.txt
+./autodig.sh 1 query.txt answers.txt
 ```
 
 Use the questions-and-answer pair to check whether new DNS server records are in order.
 ```bash
-./autodig.sh 1 answers.txt verification-report.txt
+./autodig.sh 0 answers.txt verification-report.txt
 ```
 
 ## Features Required
