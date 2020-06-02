@@ -6,11 +6,11 @@
 #                   MIT-License                #
 #                                              #
 #  Usage:                                      #
-#  ./autodig.sh 0 <input.txt> <output.txt>     #
+#  ./autodig.sh 1 <input.txt> <output.txt>     #
 #  - Retrieving all answers based on input.txt #
 #    Output all answers to output.txt          #
 #                                              #
-#  ./autodig.sh 1 <input.txt> <output.txt>     #
+#  ./autodig.sh 0 <input.txt> <output.txt>     #
 #  - Verifying all answers based on input.txt  #
 #    (Obtained from first command)             #
 ################################################
