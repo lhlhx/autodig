@@ -552,13 +552,13 @@ function service_record_route() {
     done
     unset IFS
 }
-if [ $2="" || $3="" ]; then
-    func_log_print 0 "Input or Output File not found. Please Re-enter Filename:"
-
-    echo "$(date) - ERROR: Input File not found."
-
-    exit 1
-fi
+# if [ $2="" || $3="" ]; then
+#     func_log_print 0 "Input or Output File not found. Please Re-enter Filename:"
+# 
+#     echo "$(date) - ERROR: Input File not found."
+# 
+#     exit 1
+# fi
 
 if [ ! -f $2 ]; then
     func_log_print 0 "Input File not found. Please Re-enter Filename:"
