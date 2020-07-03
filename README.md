@@ -24,6 +24,7 @@ NS,google.com.
 SOA,google.com.
 SRV,_sip._udp.sip.voice.google.com.
 TXT,google.com.
+PTR,8.8.8.8.in-addr.arpa.
 ```
 
 Commit batch dns record lookup with autodig.sh, questions-and-answer pair will be created in *answers.txt*.

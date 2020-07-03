@@ -245,6 +245,27 @@ function func_verify_record_cname() {
     # answer_code=$(func_verify_record "CNAME")
     return $answer_code
 }
+## Verify PTR Record
+function func_verify_record_ptr() {
+    local hostname=$1
+    local pre_array=$2
+    local answer_code=1
+
+    # Get Array
+    if ! func_get_values_from_pre_array "$pre_array"; then
+        func_log_print 0 "${FUNCNAME[0]}: func_get_values_from_pre_array failed, skip current line."
+        return $answer_code
+    fi
+    
+    # Check if there are zero or more than one PTR records, if YES, only process first PTR record.
+    if [[ ! ${#__array_list[@]} -eq 1 ]]; then
+        func_log_print 0 "${FUNCNAME[0]}: PTR have zero or multiple records, only process first PTR record."
+    fi
+
+    func_verify_record "PTR"
+    # answer_code=$(func_verify_record "PTR")
+    return $answer_code
+}
 ## Verify MX Record
 function func_verify_record_mx() {
     local hostname=$1
@@ -460,6 +481,22 @@ function service_record_route() {
                 fi
                 ;;
 
+            PTR)
+                # PTR: Verify PTR Record
+                # Schema: PTR,<FQDN>
+
+                func_log_print 2 "Enter PTR case."
+
+                if [[ $__service_option -eq 0 ]]; then
+                    hostname=${line[1]}
+                    answer=${line[2]}
+                    func_verify_record_ptr "$hostname" "$answer"
+                else
+                    hostname=${line[1]}
+                    allowed_record=1
+                fi
+                ;;
+
             MX)
                 # MX: Verify MX Record
                 # Schema: MX,<FQDN>,<MX 1>;<MX 2>;...;<MX n>
@@ -552,13 +589,6 @@ function service_record_route() {
     done
     unset IFS
 }
-# if [ $2="" || $3="" ]; then
-#     func_log_print 0 "Input or Output File not found. Please Re-enter Filename:"
-# 
-#     echo "$(date) - ERROR: Input File not found."
-# 
-#     exit 1
-# fi
 
 if [ ! -f $2 ]; then
     func_log_print 0 "Input File not found. Please Re-enter Filename:"
